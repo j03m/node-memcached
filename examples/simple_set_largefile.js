@@ -2,8 +2,8 @@ var	nMemcached = require( '../' ),
 	fs = require('fs'),
 	memcached;
 
-// connect to our memcached server on host 10.211.55.5, port 11211
-memcached = new nMemcached( "10.211.55.5:11211" );
+// connect to our memcached server on host 127.0.0.1, port 11211
+memcached = new nMemcached( "127.0.0.1:11211" );
 
 fs.readFile( __dirname + '/binary/lipsum.txt', function( err, data ){
 	if( err ) console.error( err );

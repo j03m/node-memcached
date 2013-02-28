@@ -1,7 +1,7 @@
 var	nMemcached = require( '../' ),
 	memcached;
 
-// connect to our memcached server on host 10.211.55.5, port 11211
+// connect to our memcached server on host 127.0.0.1, port 11211
 memcached = new nMemcached( "10.211.55.6:11211" );
 
 memcached.set( "hello", 1, 10000, function( err, result ){
