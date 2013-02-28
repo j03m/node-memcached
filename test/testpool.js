@@ -157,7 +157,6 @@ describe("test the connection pool", function() {
                 });
                 socket3.write(COMMAND);
             });
-
         }, 0);
     });
 
