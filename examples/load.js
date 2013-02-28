@@ -6,33 +6,28 @@
  * To change this template use File | Settings | File Templates.
  */
 
-var crc32 = require('crc32');
 var Membase = require('../');
-var m1 = new Membase("127.0.0.1:11211", {poolSize:50});
-var m2 = new Membase("127.0.0.1:11212", {poolSize:50});
-var m3 = new Membase("127.0.0.1:11213", {poolSize:50});
-var m4 = new Membase("127.0.0.1:11214", {poolSize:50});
-var m5 = new Membase("127.0.0.1:11215", {poolSize:50});
-var m6 = new Membase("127.0.0.1:11216", {poolSize:50});
-var m7 = new Membase("127.0.0.1:11217", {poolSize:50});
-var m8 = new Membase("127.0.0.1:11218", {poolSize:50});
-var m9 = new Membase("127.0.0.1:11219", {poolSize:50});
+var m1 = new Membase("127.0.0.1:11211", {poolSize:10});
 
 
-var membases = [m1,m2,m3,m4,m5];
 
-for (var i =0;i<25;i++){
+var membases = [m1];
+var start = new Date().getTime();
+for (var i =0;i<50;i++){
     setInterval(function(){
         go();
     },0);
 }
 
-//go();
-
-//    setInterval(function(){
-//        go();
-//    },0);
-
+var count = 0;
+setInterval(function(){
+    var end = new Date().getTime();
+    var diff = (end-start)/1000;
+    var rps = count/diff;
+    console.log(rps + "rps");
+    count = 0;
+    start = new Date().getTime();
+},1000);
 
 
 function go(){
@@ -40,26 +35,25 @@ function go(){
     var key = GUID();
     var value = key;
     //set
-    membases[defaultShard(key)].set(key, value, 60, function(err, result){
+    m1.set(key, value, 60, function(err, result){
+        count++;
         if (err){
             throw new Error(err);
         }
-        console.log("SET: " + result);
-        membases[defaultShard(key)].get(key, function(err, result){
+
+        m1.get(key, function(err, result){
+            count++;
             if (err){
                 throw new Error(err);
             }
             if (key!=result) {
                 throw new Error("ru oh");
             }
-            console.log("GET: " + key + " " + result);
         });
     } );
+
 }
 
-function defaultShard(key){
-    return (((crc32(key) >>> 16) & 0x7fff) % membases.length) || 0;
-}
 
 function S4()
 {
