@@ -21,17 +21,17 @@ var m9 = new Membase("127.0.0.1:11219", {poolSize:50});
 
 var membases = [m1,m2,m3,m4,m5];
 
-//for (var i =0;i<10000;i++){
-//    setInterval(function(){
-//        go();
-//    },0);
-//}
-
-//go();
-
+for (var i =0;i<25;i++){
     setInterval(function(){
         go();
     },0);
+}
+
+//go();
+
+//    setInterval(function(){
+//        go();
+//    },0);
 
 
 

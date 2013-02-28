@@ -117,20 +117,24 @@ describe("test the connection pool", function() {
 
     it("it queues up request once satured and gets to them all eventually using process.nexttick", function(done) {
         var count = 0;
+        var once = 0;
         for(var i =0; i< poolSize*10; i++){
             daddyPool.get(function(err, socket3){
                 socket3.on('data', function(data){
-                    console.log('saturations testing....'+daddyPool.getAvailableCount());
+                    console.log('saturations testing....request:' + count + " conns:" +daddyPool.getAvailableCount());
                     assert.equal(data.toString(), RESPONSE); //assuming membase is listening, change accordingly
-                    socket3.release();
-                    count++;
-                    if (count == (poolSize*10)-1){
-                        done();
+                    if (count == (poolSize*10)){
+                        if (once==0){
+                            once++;
+                            done();
+                        }
+
                     }
+                    socket3.release();
                 });
                 socket3.write(COMMAND);
+                count++;
             });
-
         }
     });
 
