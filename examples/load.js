@@ -38,7 +38,7 @@ for (var i =0;i<25;i++){
 function go(){
     //random key
     var key = GUID();
-    var value = GUID();
+    var value = key;
     //set
     membases[defaultShard(key)].set(key, value, 60, function(err, result){
         if (err){
@@ -49,7 +49,10 @@ function go(){
             if (err){
                 throw new Error(err);
             }
-            console.log("GET: " + result);
+            if (key!=result) {
+                throw new Error("ru oh");
+            }
+            console.log("GET: " + key + " " + result);
         });
     } );
 }
