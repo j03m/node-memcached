@@ -141,7 +141,7 @@ describe("test the connection pool", function() {
     it("it performs under duress", function(done) {
         var count = 0;
 
-        this.timeout(1200000);
+        this.timeout(1000);
         var id = setInterval(function(){
             //get a socket ever 0 interval until we've pulled or queued 10 million sockets
             daddyPool.get(function(err, socket3){
