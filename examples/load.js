@@ -7,7 +7,7 @@
  */
 
 var Membase = require('../');
-var m1 = new Membase("127.0.0.1:11211", {poolSize:10});
+var m1 = new Membase("10.80.81.242:11211", {poolSize:10});
 
 
 
