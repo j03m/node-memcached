@@ -7,13 +7,13 @@
  */
 
 var Membase = require('../');
-var m1 = new Membase("127.0.0.1:11211", {poolSize:10});
+var m1 = new Membase("10.80.81.242:11211", {poolSize:10});
 
 
 
 var membases = [m1];
 var start = new Date().getTime();
-for (var i =0;i<50;i++){
+for (var i =0;i<25;i++){
     setInterval(function(){
         go();
     },0);
@@ -24,10 +24,10 @@ setInterval(function(){
     var end = new Date().getTime();
     var diff = (end-start)/1000;
     var rps = count/diff;
-    console.log(rps + "rps");
+    console.log("*********************************"+rps + "rps");
     count = 0;
     start = new Date().getTime();
-},1000);
+},100);
 
 
 function go(){
@@ -36,13 +36,15 @@ function go(){
     var value = key;
     //set
     m1.set(key, value, 60, function(err, result){
-        count++;
+        //console.log("set:"+result);
+	count++;
         if (err){
             throw new Error(err);
         }
 
         m1.get(key, function(err, result){
-            count++;
+            //console.log("get:"+result);
+	    count++;
             if (err){
                 throw new Error(err);
             }
