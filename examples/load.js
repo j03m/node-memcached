@@ -52,8 +52,8 @@ function go(){
                     throw new Error(err);
                 }
                 if (key!=result) {
-		    console.log("*BAD: key:" + key + " result: " + result);
-                    throw new Error("ru oh");
+		            console.log("*BAD: key:" + key + " result: " + result);
+                    //throw new Error("ru oh");
                 }
                 if (count>1000){
                     sum();
