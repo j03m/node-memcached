@@ -10,8 +10,8 @@ var Membase = require('../');
 var membases = [];
 var numClients = 1;
 for(var i=0;i<numClients;i++){
-    	//membases.push(new Membase("127.0.0.1:11211", {poolSize:10}));
-	membases.push(new Membase("10.80.81.242:11211", {poolSize:10}));
+    membases.push(new Membase("127.0.0.1:11211", {poolSize:10}));
+	//membases.push(new Membase("10.80.81.242:11211", {poolSize:10}));
 }
 
 var start = new Date().getTime();
