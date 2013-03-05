@@ -10,15 +10,16 @@ var Membase = require('../');
 var membases = [];
 var numClients = 5;
 for(var i=0;i<numClients;i++){
-    membases.push(new Membase("127.0.0.1:11211", {poolSize:10}));
+    	//membases.push(new Membase("127.0.0.1:11211", {poolSize:10}));
+	membases.push(new Membase("10.80.81.242:11211", {poolSize:10}));
 }
 
 var start = new Date().getTime();
-/*for (var i =0;i<50;i++){
+//for (var i =0;i<50;i++){
     setInterval(function(){
         go();
     },0);
-}*/
+//}
 
 var count = 0;
 function sum(){
