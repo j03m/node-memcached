@@ -7,11 +7,13 @@
  */
 
 var Membase = require('../');
-var m1 = new Membase("10.80.81.242:11211", {poolSize:10});
+var membases = [];
+var numClients = 5;
+for(var i=0;i<numClients;i++){
+    	//membases.push(new Membase("127.0.0.1:11211", {poolSize:10}));
+	membases.push(new Membase("10.80.81.242:11211", {poolSize:10}));
+}
 
-
-
-var membases = [m1];
 var start = new Date().getTime();
 for (var i =0;i<50;i++){
     setInterval(function(){
@@ -20,38 +22,46 @@ for (var i =0;i<50;i++){
 }
 
 var count = 0;
-setInterval(function(){
+function sum(){
     var end = new Date().getTime();
     var diff = (end-start)/1000;
     var rps = count/diff;
-    console.log(rps + "rps");
+    console.log("*********************************"+rps + "rps");
     count = 0;
     start = new Date().getTime();
-},1000);
-
+}
 
 function go(){
     //random key
     var key = GUID();
     var value = key;
-    //set
-    m1.set(key, value, 60, function(err, result){
-        count++;
-        if (err){
-            throw new Error(err);
-        }
+    for(var ii=0;ii<numClients;ii++){
+        setGet(membases[ii]);
+    }
 
-        m1.get(key, function(err, result){
-            count++;
+    //set
+    function setGet(m){
+        m.set(key, value, 60, function(err, result){
             if (err){
                 throw new Error(err);
             }
-            if (key!=result) {
-                throw new Error("ru oh");
-            }
-        });
-    } );
 
+            m.get(key, function(err, result){
+                count++;
+                if (err){
+                    throw new Error(err);
+                }
+                if (key!=result) {
+
+                    //  throw new Error("ru oh");
+                }
+                if (count>1000){
+                    sum();
+                }
+
+            });
+        } );
+    }
 }
 
 
